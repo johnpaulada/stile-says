@@ -1,0 +1,48 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.fullscreen {
+  width: 100vw;
+  height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-container {
+  flex: 8;
+  display: flex;
+  align-items: stretch;
+}
+
+.controls-container {
+  background-color: #333;
+  flex: 2;
+}
+
+.simon-button {
+  flex: 1;
+  width: 25vh;
+  background-size: cover;
+  background-position: center;
+}
+
+#mafuyu {
+  background-image: url('./images/mafuyu.png');
+}
+
+#maika {
+  background-image: url('./images/maika.png');
+}
+
+#kaho {
+  background-image: url('./images/kaho.png');
+}
+
+#miu {
+  background-image: url('./images/miu.png');
+}

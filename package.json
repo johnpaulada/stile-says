@@ -1,0 +1,24 @@
+{
+  "name": "@johnpaulada/stile-says",
+  "version": "1.0.0",
+  "description": "A simon says game with characters from the Blend S anime. Made for FreeCodeCamp.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "stile",
+    "freecodecamp",
+    "simon-says"
+  ],
+  "author": "John Paul Ada",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "parcel-bundler": "^1.6.2"
+  },
+  "dependencies": {
+    "stimulus": "^1.0.1"
+  }
+}
