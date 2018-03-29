@@ -29,20 +29,38 @@ body {
   width: 25vh;
   background-size: cover;
   background-position: center;
+  transition: 0.5s;
+  cursor: pointer;
 }
 
 #mafuyu {
-  background-image: url('./images/mafuyu.png');
+  background-image: url('./images/maika.png');
+}
+
+#mafuyu.current {
+  background-color: yellow;
 }
 
 #maika {
   background-image: url('./images/maika.png');
 }
 
+#maika.current {
+  background-color: pink;
+}
+
 #kaho {
   background-image: url('./images/kaho.png');
 }
 
+#kaho.current {
+  background-color: cyan;
+}
+
 #miu {
-  background-image: url('./images/miu.png');
+  background-image: url('./images/miu-2.png');
+}
+
+#miu.current {
+  background-color: purple;
 }
