@@ -41,11 +41,19 @@ body {
   background-color: yellow;
 }
 
+#mafuyu:hover {
+  background-color: yellow;
+}
+
 #maika {
   background-image: url('./images/maika.png');
 }
 
 #maika.current {
+  background-color: pink;
+}
+
+#maika:hover {
   background-color: pink;
 }
 
@@ -57,10 +65,18 @@ body {
   background-color: cyan;
 }
 
+#kaho:hover {
+  background-color: cyan;
+}
+
 #miu {
   background-image: url('./images/miu-2.png');
 }
 
 #miu.current {
+  background-color: purple;
+}
+
+#miu:hover {
   background-color: purple;
 }
