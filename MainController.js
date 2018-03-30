@@ -1,3 +1,5 @@
+// TODO: FAKING REFACTOR THIS SHIT
+
 import { Controller } from "stimulus"
 const Chance = require('chance')
 
@@ -13,10 +15,11 @@ const deepArrayEquals = (array1, array2) => {
 }
 
 export default class extends Controller {
-  static targets = [ "button" ]
+  static targets = [ "button", "trigger" ]
   
   startGame() {
-    this.sequence = [chance.integer({min: 0, max: 3})]
+    this.triggerTarget.innerHTML = "Restart"
+    this.sequence = this.sequence || [chance.integer({min: 0, max: 3})]
     this.currentIndex = 0
     this.currentTarget = this.sequence[this.currentIndex]
     this.previousTarget = this.currentTarget
@@ -65,7 +68,7 @@ export default class extends Controller {
     if (this.mode === MODE_PLAYER) {
       this.answers = this.answers + CHAR_LIST.findIndex(c => evt.target.id === c)
       if (this.answers === this.sequence) {
-        if (this.sequence.length === 20) {
+        if (this.sequence.length === this.wincount) {
           alert('yey you won!')
         } else {
           this.sequence = this.sequence + chance.integer({min: 0, max: 3})
@@ -73,6 +76,13 @@ export default class extends Controller {
           this.currentTarget = this.sequence[this.currentIndex]
           this.previousTarget = this.currentTarget
           this.lightEmUp()
+        }
+      } else if (this.sequence.length === this.answers.length) {
+        if (this.strictmode) {
+          alert('hahaha you suck')
+        } else {
+          alert('please try again')
+          this.startGame(this.sequence)
         }
       }
     }
@@ -106,5 +116,17 @@ export default class extends Controller {
     this.data.set('answers', a)
 
     return this
+  }
+
+  get wincount() {
+    return parseInt(this.data.get('wincount'))
+  }
+
+  get strictmode() {
+    return this.data.get('strictmode') === "true"
+  }
+
+  set strictmode(b) {
+    this.data.set('strictmode', b ? "true" : "false")
   }
 }

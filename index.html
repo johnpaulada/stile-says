@@ -10,7 +10,7 @@
   <title>Stile Says</title>
 </head>
 <body>
-  <div data-controller="main" data-main-mode="CPU" class="fullscreen main-container">
+  <div data-controller="main" data-main-mode="CPU" data-main-wincount="20" class="fullscreen main-container" data-main-strictmode="false">
     <div class="game-container">
       <div data-action="click->main#select" data-target="main.button" id="mafuyu" class="simon-button"></div>
       <div data-action="click->main#select" data-target="main.button" id="miu" class="simon-button"></div>
@@ -18,7 +18,7 @@
       <div data-action="click->main#select" data-target="main.button" id="maika" class="simon-button"></div>
     </div>
     <div class="controls-container">
-      <button data-action="main#startGame">Start Game</button>
+      <button data-target="main.trigger" data-action="main#startGame">Start Game</button>
     </div>
   </div>
 </body>
