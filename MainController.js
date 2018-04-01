@@ -1,5 +1,3 @@
-// TODO: FAKING REFACTOR THIS SHIT
-
 import { Controller } from "stimulus"
 const Chance = require('chance')
 
@@ -8,11 +6,6 @@ const MODE_PLAYER = 'PLAYER'
 const CHAR_LIST = ['mafuyu', 'miu', 'kaho', 'maika']
 
 const chance = new Chance()
-
-const deepArrayEquals = (array1, array2) => {
-  return array1.length === array2.length
-    && array1.every((item1, index) => item1 === array2[index])
-}
 
 const generateNext = sequence => {
   const randomIndex = chance.integer({min: 0, max: 3})
@@ -24,41 +17,65 @@ const generateNext = sequence => {
   }
 }
 
+const hoverer = shouldHover => {
+  const buttons = [...document.querySelectorAll('.simon-button')]
+  const method = shouldHover ? 'add' : 'remove'
+  buttons.forEach(button => button.classList[method]('hoverable'))
+}
+
+const playSound = index =>
+  [...document.querySelectorAll('audio')][index].play()
+
 export default class extends Controller {
   static targets = [ "button", "trigger" ]
   
   startGame() {
     this.triggerTarget.innerHTML = "Restart"
     this.sequence = [chance.integer({min: 0, max: 3})]
+    this.streak = 0
+    this.reset()
+  }
+
+  reset() {
     this.currentIndex = 0
     this.currentTarget = this.sequence[this.currentIndex]
     this.previousTarget = this.currentTarget
+    hoverer(false)
     this.lightEmUp()
   }
 
   lightEmUp() {
-    if (this.currentIndex < this.sequence.length) {
+    const notDonePressing = this.currentIndex < this.sequence.length
 
-      this.currentTarget = this.sequence[this.currentIndex]
-
-      setTimeout(() => {
-        this.lightUp(this.currentTarget)
-      }, 1000)
-      
+    if (notDonePressing) {
+      this.continuePlaying()
     } else {
-      setTimeout(() => {
-
-        // Fade out previous target
-        const previousTarget = this.buttonTargets[this.previousTarget]
-        previousTarget.classList.remove('current')
-
-        this.currentIndex = 0
-        this.mode = MODE_PLAYER
-        this.answers = []
-      }, 1000)
+      this.playerTurn()
     }
   }
 
+  continuePlaying() {
+    this.currentTarget = this.sequence[this.currentIndex]
+
+    setTimeout(() => {
+      playSound(this.currentTarget)
+      this.lightUp(this.currentTarget)
+    }, 1000)
+  }
+
+  playerTurn() {
+    setTimeout(() => {
+      // Fade out previous target
+      const previousTarget = this.buttonTargets[this.previousTarget]
+      previousTarget.classList.remove('current')
+
+      this.currentIndex = 0
+      this.mode = MODE_PLAYER
+      this.answers = []
+      hoverer(true)
+    }, 1000)
+  }
+  
   lightUp(index) {
 
     // Fade out previous target
@@ -74,27 +91,52 @@ export default class extends Controller {
     this.lightEmUp()
   }
 
+
   select(evt) {
-    if (this.mode === MODE_PLAYER) {
-      this.answers = this.answers + CHAR_LIST.findIndex(c => evt.target.id === c)
-      if (this.answers === this.sequence) {
-        if (this.sequence.length === this.wincount) {
-          alert('yey you won!')
-        } else {
-          this.sequence = this.sequence + generateNext(this.sequence)
-          this.currentIndex = 0
-          this.currentTarget = this.sequence[this.currentIndex]
-          this.previousTarget = this.currentTarget
-          this.lightEmUp()
-        }
-      } else if (this.sequence.length === this.answers.length) {
-        if (this.strictmode) {
-          alert('hahaha you suck')
-        } else {
-          alert('please try again')
-          this.startGame(this.sequence)
+    const PLAYERS_TURN = this.mode === MODE_PLAYER
+    
+    if (PLAYERS_TURN) {
+      const buttonIndex = CHAR_LIST.findIndex(c => evt.target.id === c)
+      this.answers = this.answers + buttonIndex
+      playSound(buttonIndex)
+
+      const PERFECT_BUTTON_PRESSES = this.answers === this.sequence
+
+      if (PERFECT_BUTTON_PRESSES) {
+        this.correctButtonPresses()
+      } else {
+        const LATEST_PRESS_STILL_CORRECT = this.answers.charAt(this.answers.length - 1) === this.sequence.charAt(this.answers.length - 1)
+        const INCORRECT_PRESS_COMBINATION = !LATEST_PRESS_STILL_CORRECT
+
+        if (INCORRECT_PRESS_COMBINATION) {
+          this.incorrectButtonPresses()
         }
       }
+    }
+  }
+
+  correctButtonPresses() {
+    const HAS_REACHED_WIN_COUNT = this.sequence.length === this.wincount
+
+    if (HAS_REACHED_WIN_COUNT) {
+      alert('yey you won!')
+    } else {
+      this.sequence = this.sequence + generateNext(this.sequence)
+
+      this.streak = this.streak + 1
+      document.querySelector('#streak-count').innerHTML = this.streak
+
+      this.reset()
+    }
+  }
+
+  incorrectButtonPresses() {
+    if (this.strictmode) {
+      alert('hahaha you suck')
+      this.startGame()
+    } else {
+      alert('please try again')
+      this.reset()
     }
   }
 
@@ -138,5 +180,13 @@ export default class extends Controller {
 
   set strictmode(b) {
     this.data.set('strictmode', b ? "true" : "false")
+  }
+
+  get streak() {
+    return parseInt(this.data.get('streak'))
+  }
+
+  set streak(s) {
+    return this.data.set('streak', s)
   }
 }

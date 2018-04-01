@@ -16,21 +16,26 @@ body {
 .game-container {
   flex: 8;
   display: flex;
+  justify-content: center;
   align-items: stretch;
+  flex-flow: row wrap;
 }
 
 .controls-container {
-  background-color: #333;
   flex: 2;
 }
 
 .simon-button {
   flex: 1;
-  width: 25vh;
+  min-width: 300px;
   background-size: cover;
   background-position: center;
   transition: 0.25s;
   cursor: pointer;
+}
+
+.control-division {
+  margin: 10px;
 }
 
 #mafuyu {
@@ -38,11 +43,11 @@ body {
 }
 
 #mafuyu.current {
-  background-color: yellow;
+  background-color: #FFF176;
 }
 
-#mafuyu:hover {
-  background-color: yellow;
+#mafuyu.hoverable:hover {
+  background-color: #FFF176;
 }
 
 #maika {
@@ -50,11 +55,11 @@ body {
 }
 
 #maika.current {
-  background-color: pink;
+  background-color: #F8BBD0;
 }
 
-#maika:hover {
-  background-color: pink;
+#maika.hoverable:hover {
+  background-color: #F8BBD0;
 }
 
 #kaho {
@@ -62,11 +67,11 @@ body {
 }
 
 #kaho.current {
-  background-color: cyan;
+  background-color: #B3E5FC;
 }
 
-#kaho:hover {
-  background-color: cyan;
+#kaho.hoverable:hover {
+  background-color: #B3E5FC;
 }
 
 #miu {
@@ -74,9 +79,13 @@ body {
 }
 
 #miu.current {
-  background-color: purple;
+  background-color: #CE93D8;
 }
 
-#miu:hover {
-  background-color: purple;
+#miu.hoverable:hover {
+  background-color: #CE93D8;
+}
+
+audio {
+  display: none;
 }
