@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@0.4.0/modern-normalize.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@1.0.1/dist/bulma-switch.min.css">
   <link rel="stylesheet" href="./app.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script defer src="./app.js"></script>
@@ -26,7 +27,13 @@
     <div class="container controls-container">
       <div class="columns is-centered control-division">
         <div class="column">
-          <button class="button is-success" data-target="main.trigger" data-action="main#startGame">Start Game</button>
+          <div class="field">
+            <button class="button is-success" data-target="main.trigger" data-action="main#startGame">Start Game</button>
+          </div>
+          <div class="field">
+            <input data-action="change->main#toggleStrict" id="strictSwitch" type="checkbox" name="strictSwitch" class="switch">
+            <label for="strictSwitch">Strict</label>
+          </div>
         </div>
         <div class="column">
           <h3 class="subtitle">Streak</h3>

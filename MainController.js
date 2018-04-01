@@ -140,6 +140,10 @@ export default class extends Controller {
     }
   }
 
+  toggleStrict(evt) {
+    this.strictmode = evt.target.checked
+  }
+
   get sequence() {
     return this.data.get('sequence')
   }
@@ -179,7 +183,7 @@ export default class extends Controller {
   }
 
   set strictmode(b) {
-    this.data.set('strictmode', b ? "true" : "false")
+    this.data.set('strictmode', b)
   }
 
   get streak() {
