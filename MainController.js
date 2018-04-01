@@ -14,12 +14,22 @@ const deepArrayEquals = (array1, array2) => {
     && array1.every((item1, index) => item1 === array2[index])
 }
 
+const generateNext = sequence => {
+  const randomIndex = chance.integer({min: 0, max: 3})
+
+  if (parseInt(sequence.charAt(sequence.length - 1)) === randomIndex) {
+    return generateNext(sequence)
+  } else {
+    return randomIndex
+  }
+}
+
 export default class extends Controller {
   static targets = [ "button", "trigger" ]
   
   startGame() {
     this.triggerTarget.innerHTML = "Restart"
-    this.sequence = this.sequence || [chance.integer({min: 0, max: 3})]
+    this.sequence = [chance.integer({min: 0, max: 3})]
     this.currentIndex = 0
     this.currentTarget = this.sequence[this.currentIndex]
     this.previousTarget = this.currentTarget
@@ -71,7 +81,7 @@ export default class extends Controller {
         if (this.sequence.length === this.wincount) {
           alert('yey you won!')
         } else {
-          this.sequence = this.sequence + chance.integer({min: 0, max: 3})
+          this.sequence = this.sequence + generateNext(this.sequence)
           this.currentIndex = 0
           this.currentTarget = this.sequence[this.currentIndex]
           this.previousTarget = this.currentTarget
