@@ -1,4 +1,3 @@
-// TODO: Replace Sounds
 // TODO: Add meta tags
 
 import { Controller } from "stimulus"
@@ -9,10 +8,10 @@ const MODE_PLAYER = 'PLAYER'
 const CHAR_LIST = ['mafuyu', 'miu', 'kaho', 'maika']
 // const audios = [...document.querySelectorAll('audio')]
 const audios = [
-  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound1.mp3']}),
-  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound2.mp3']}),
-  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound3.mp3']}),
-  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound4.mp3']})
+  new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound1.mp3']}),
+  new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound2.mp3']}),
+  new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound3.mp3']}),
+  new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound4.mp3']})
 ];
 
 // audios.forEach(a => {
