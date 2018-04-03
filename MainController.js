@@ -1,11 +1,26 @@
+// TODO: Replace Sounds
+// TODO: Add meta tags
+
 import { Controller } from "stimulus"
 const Chance = require('chance')
-
+const chance = new Chance();
 const MODE_CPU = 'CPU'
 const MODE_PLAYER = 'PLAYER'
 const CHAR_LIST = ['mafuyu', 'miu', 'kaho', 'maika']
+// const audios = [...document.querySelectorAll('audio')]
+const audios = [
+  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound1.mp3']}),
+  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound2.mp3']}),
+  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound3.mp3']}),
+  new Howl({src: ['http://s3.amazonaws.com/freecodecamp/simonSound4.mp3']})
+];
 
-const chance = new Chance()
+// audios.forEach(a => {
+//   a.addEventListener('ended', () => {
+//     a.pause();
+//     a.currentTime = 0;
+//   })
+// })
 
 const generateNext = sequence => {
   const randomIndex = chance.integer({min: 0, max: 3})
@@ -23,8 +38,7 @@ const hoverer = shouldHover => {
   buttons.forEach(button => button.classList[method]('hoverable'))
 }
 
-const playSound = index =>
-  [...document.querySelectorAll('audio')][index].play()
+const playSound = index => audios[index].play()
 
 export default class extends Controller {
   static targets = [ "button", "trigger" ]
@@ -91,7 +105,6 @@ export default class extends Controller {
     this.lightEmUp()
   }
 
-
   select(evt) {
     const PLAYERS_TURN = this.mode === MODE_PLAYER
     
@@ -119,7 +132,7 @@ export default class extends Controller {
     const HAS_REACHED_WIN_COUNT = this.sequence.length === this.wincount
 
     if (HAS_REACHED_WIN_COUNT) {
-      alert('yey you won!')
+      swal("Hurray!", "You won the game!", "success")
     } else {
       this.sequence = this.sequence + generateNext(this.sequence)
 
@@ -132,10 +145,10 @@ export default class extends Controller {
 
   incorrectButtonPresses() {
     if (this.strictmode) {
-      alert('hahaha you suck')
+      swal("Oops!", "You missed! We're in strict mode so you have to try again from the beginning!", "error")
       this.startGame()
     } else {
-      alert('please try again')
+      swal("Oops!", "You missed! Please try again.", "error")
       this.reset()
     }
   }
