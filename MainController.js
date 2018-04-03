@@ -6,20 +6,13 @@ const chance = new Chance();
 const MODE_CPU = 'CPU'
 const MODE_PLAYER = 'PLAYER'
 const CHAR_LIST = ['mafuyu', 'miu', 'kaho', 'maika']
-// const audios = [...document.querySelectorAll('audio')]
+
 const audios = [
   new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound1.mp3']}),
   new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound2.mp3']}),
   new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound3.mp3']}),
   new Howl({src: ['https://s3.amazonaws.com/freecodecamp/simonSound4.mp3']})
 ];
-
-// audios.forEach(a => {
-//   a.addEventListener('ended', () => {
-//     a.pause();
-//     a.currentTime = 0;
-//   })
-// })
 
 const generateNext = sequence => {
   const randomIndex = chance.integer({min: 0, max: 3})
